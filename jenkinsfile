@@ -48,7 +48,7 @@ pipeline {
   }
   environment {
     AWS_DEFAULT_REGION = 'us-east-1'
-    SERVICE_NAME = 'Vote'
+    SERVICE_NAME = 'vote'
     TASK_FAMILY = 'Vote-Fargate'
     ECS_CLUSTER = 'Vote-App'
   }
