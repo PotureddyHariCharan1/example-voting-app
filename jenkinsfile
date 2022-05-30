@@ -14,8 +14,8 @@ pipeline {
         stage('Build Docker Image') {
           steps {
             
-            sh 'cd vote && sudo docker build . -t 635145294553.dkr.ecr.us-east-1.amazonaws.com/Vote:${BUILD_NUMBER}'
-            sh 'sudo docker push 635145294553.dkr.ecr.us-east-1.amazonaws.com/Vote:${BUILD_NUMBER}'
+            sh 'cd vote && sudo docker build . -t 635145294553.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
+            sh 'sudo docker push 635145294553.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
           }
         }
 
@@ -55,7 +55,7 @@ pipeline {
   post {
     always {
       deleteDir()
-      sh 'sudo docker rmi 635145294553.dkr.ecr.us-east-1.amazonaws.com/Vote:${BUILD_NUMBER}'
+      sh 'sudo docker rmi 635145294553.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
     }
 
   }
