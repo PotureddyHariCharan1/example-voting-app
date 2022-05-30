@@ -21,9 +21,6 @@ pipeline {
           }
         }
 
-      
-    }
-
     stage('Deploy in ECS') {
       steps {
         script {
