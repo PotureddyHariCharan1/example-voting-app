@@ -3,15 +3,21 @@ pipeline {
   agent {
     label 'worker'
   }
+  
+  environment {
+          AWS_DEFAULT_REGION = 'us-east-1'
+          SERVICE_NAME = 'vote'
+          TASK_FAMILY = 'vote-fargate'
+          ECS_CLUSTER = 'vote-app'
+  }
   stages {
     stage('Git Checkout') {
       steps {
         checkout scm
       }
     }
-
-    stage('Build Docker Image') {
-      parallel {
+      stage('Build Docker Image') {
+     
         stage('Build Docker Image') {
           steps {
             sh 'cd vote && sudo docker build . -t 635145294553.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
@@ -19,14 +25,7 @@ pipeline {
           }
         }
 
-        stage('Unit Testing') {
-          steps {
-            sh 'npm test'
-          }
-        }
-
-      }
-    }
+ 
 
     stage('Deploy in ECS') {
       steps {
@@ -46,12 +45,7 @@ pipeline {
     }
 
   }
-  environment {
-    AWS_DEFAULT_REGION = 'us-east-1'
-    SERVICE_NAME = 'vote'
-    TASK_FAMILY = 'vote-fargate'
-    ECS_CLUSTER = 'vote-app'
-  }
+  
   post {
     always {
       deleteDir()
