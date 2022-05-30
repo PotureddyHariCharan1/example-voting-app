@@ -11,7 +11,7 @@ pipeline {
           steps {
           
             sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 139471262780.dkr.ecr.us-east-1.amazonaws.com'
-            sh 'docker build -t vote .'
+            sh 'cd vote && docker build -t vote .'
             sh 'docker tag vote:latest 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
             sh 'docker push 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
           }
