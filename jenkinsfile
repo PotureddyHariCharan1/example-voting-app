@@ -16,7 +16,7 @@ pipeline {
         checkout scm
       }
     }
-      stage('Build Docker Image') {
+    stage('Build Docker Image') {
      
         stage('Build Docker Image') {
           steps {
@@ -24,9 +24,6 @@ pipeline {
             sh 'sudo docker push 635145294553.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
           }
         }
-
- 
-
     stage('Deploy in ECS') {
       steps {
         script {
