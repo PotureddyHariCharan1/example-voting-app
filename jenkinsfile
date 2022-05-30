@@ -4,6 +4,12 @@ pipeline {
     label 'worker'
   }
   
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+    disableConcurrentBuilds()
+    timeout(time: 1, unit: 'HOURS')
+  }
+  
   environment {
           AWS_DEFAULT_REGION = 'us-east-1'
           SERVICE_NAME = 'vote'
@@ -35,10 +41,9 @@ pipeline {
           --service ${SERVICE_NAME} \
           --task-definition ${TASK_FAMILY}:${NEW_REVISION}'''
         }
-
       }
     }
-    }
+  }
     post {
     always {
       deleteDir()
@@ -46,13 +51,6 @@ pipeline {
     }
 
   }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '10'))
-    disableConcurrentBuilds()
-    timeout(time: 1, unit: 'HOURS')
-  }
-
-
-  }
+}
   
   
