@@ -9,8 +9,11 @@ pipeline {
    
         stage('Build Docker Image') {
           steps {
-            sh 'cd vote && sudo docker build . -t 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
-            sh 'sudo docker push 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
+          
+            sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 139471262780.dkr.ecr.us-east-1.amazonaws.com'
+            sh 'docker build -t vote .'
+            sh 'docker tag vote:latest 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
+            sh 'docker push 139471262780.dkr.ecr.us-east-1.amazonaws.com/vote:${BUILD_NUMBER}'
           }
         }
 
